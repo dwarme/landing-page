@@ -3,9 +3,6 @@ Project: Udacity Frontend Web Developer - Landing Page
 
 <h3>A multi-section landing page with a dynamically updating navigationalmenu.</h3> 
 
-## Project Name
-A multi-section landing page with a dynamically updating navigational menu.
-
 ## Description
 This project is part of the Front End Web Developer Nanodegree program at Udacity. The goal of this project is to build a landing page that dynamically updates the navigation menu based on the amount of content added to the page. This simulates a real-world scenario where information is pulled from an API and the number of results is unknown until page load.
 
