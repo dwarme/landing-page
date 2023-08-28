@@ -1,6 +1,8 @@
 # Landing-page
 Project: Udacity Frontend Web Developer - Landing Page
 
+<h3>A multi-section landing page with a dynamically updating navigationalmenu.</h3> 
+
 ## Project Name
 A multi-section landing page with a dynamically updating navigational menu.
 
