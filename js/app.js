@@ -85,7 +85,6 @@ function autoHideNavbarOnIdleScroll() {
         
         // Set a timeout to run after scrolling ends
         isScrolling = setTimeout(function() {
-            console.log(navDOM.getBoundingClientRect())
             if(window.scrollY >= 32) {
                 // Hide the navbar after scrolling ends
                 hideNav();
