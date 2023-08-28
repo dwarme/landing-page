@@ -232,8 +232,8 @@ section.active .landing__container::after {
 .btn-scroll-to-top {
     cursor: pointer;
     position: fixed;
-    bottom: 120px;
-    right: 90px;
+    bottom: 80px;
+    right: 50px;
     z-index: 3;
     width: 70px;
     height: 70px;
