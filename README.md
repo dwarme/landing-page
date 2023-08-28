@@ -1,4 +1,4 @@
-# landing-page
+# Landing-page
 Project: Udacity Frontend Web Developer - Landing Page
 
 ## Project Name
@@ -11,14 +11,16 @@ The landing page is designed to be responsive and usable across modern desktop, 
 
 ## Features
 
-<li>Dynamically updating navigational menu</li>
-Responsive layout for all devices
-Styling for active states
-Smooth scrolling behavior
-Clear indication of the active section while scrolling
+<ul>
+    <li>Dynamically updating navigational menu</li>
+    <li>Responsive layout for all devices</li>
+    <li>Styling for active states</li>
+    <li>Smooth scrolling behavior</li>
+    <li>Clear indication of the active section while scrolling</li>
+</ul>
 
 
 ## Usage
 Clone the repository to your local machine.
-Open the <i>index.html</li> file in your preferred web browser.
+Open the <strong><i>index.html</i></strong> file in your preferred web browser.
 Scroll through the page to see the dynamically updating navigation menu and active section highlighting.
