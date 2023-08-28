@@ -66,6 +66,38 @@ function buildNav() {
     pageHeaderDOM.appendChild(navDOM);
 }
 
+// Function to hide the navbar
+function hideNav() {
+    navDOM.classList.add('hidden');
+}
+
+// Function to show the navbar
+function showNav() {
+    navDOM.classList.remove('hidden');
+}
+
+// Automatically hides the navigation bar when there's no scrolling activity for a certain period of time.
+function autoHideNavbarOnIdleScroll() {
+    let isScrolling = false;
+    window.addEventListener('scroll', function() {
+        // Clear the timeout while scrolling
+        window.clearTimeout(isScrolling);
+        
+        // Set a timeout to run after scrolling ends
+        isScrolling = setTimeout(function() {
+            console.log(navDOM.getBoundingClientRect())
+            if(window.scrollY >= 32) {
+                // Hide the navbar after scrolling ends
+                hideNav();
+            }
+             
+        }, 400); // 400ms: To give user time to navigate between sections
+    
+        // Show the navbar immediately
+        showNav();
+    });
+}
+
 // Add class 'active' to section when near top of viewport
 function activeOnNearTopViewport(sectionDOM) {
     // Create an IntersectionObserver to track element visibility
@@ -112,6 +144,25 @@ function scrollToSection(sectionID) {
     });
 }
 
+function activeBtnGoTopOnScrollEnd() {
+    const scrollToTopBtnDOM = document.getElementById('scrollToTop');
+    window.addEventListener('scroll', function() {
+        if (window.scrollY + 1100 >= document.documentElement.scrollHeight) {
+            scrollToTopBtnDOM.classList.add('active');
+        } else {
+            scrollToTopBtnDOM.classList.remove('active');
+        }
+    });
+
+    // Scroll to the top when the button is clicked
+    scrollToTopBtnDOM.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
 /**
  * End Main Functions
  * Begin Events
@@ -134,7 +185,7 @@ sectionsDOM.forEach(section => {
     // Configure the anchor element with attributes and content
     menuListItemAnchorDOM.href = "#"; 
     menuListItemAnchorDOM.setAttribute('data-section-id', sectionID);
-    menuListItemAnchorDOM.classList = 'menu-link';
+    menuListItemAnchorDOM.className = 'menu__link';
     menuListItemAnchorDOM.appendChild(menuListItemAnchorTextDOM);
 
     // Attach a click event listener to the anchor element
@@ -149,3 +200,6 @@ navDOM.appendChild(navMenuListDOM);
 
 // Set sections as active
 sectionsDOM.forEach(section=> activeOnNearTopViewport(section));
+
+autoHideNavbarOnIdleScroll();
+activeBtnGoTopOnScrollEnd();
