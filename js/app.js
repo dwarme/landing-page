@@ -23,6 +23,9 @@
  * 
 */
 
+const sectionsDOM = document.querySelectorAll('section');
+const pageHeaderDOM = document.querySelector('.page__header');
+let navDOM = null;
 
 /**
  * End Global Variables
@@ -30,7 +33,24 @@
  * 
 */
 
+function handleMenuAnchorClick(sectionID){
+    // Return an arrow function that handles the click event
+    return (event) => {
+        // Prevent the default behavior of the anchor element (page scroll)
+        event.preventDefault();
 
+        // Scroll to the specified section using the provided sectionID
+        scrollToSection(sectionID);
+    }
+}
+
+function navLinkRemoveActive(sectionID) {
+    document.querySelector(`a[data-section-id="${sectionID}"]`).classList.remove('active');
+}
+
+function navLinkAddActive(sectionID) {
+    document.querySelector(`a[data-section-id="${sectionID}"]`).classList.add('active');
+}
 
 /**
  * End Helper Functions
@@ -39,13 +59,58 @@
 */
 
 // build the nav
-
+function buildNav() {
+    navDOM = document.createElement('nav')
+    // Add a CSS class to the <nav> element
+    navDOM.className = 'navbar__menu';
+    pageHeaderDOM.appendChild(navDOM);
+}
 
 // Add class 'active' to section when near top of viewport
+function activeOnNearTopViewport(sectionDOM) {
+    // Create an IntersectionObserver to track element visibility
+    const observer = new IntersectionObserver(entries => {
+        // Check if the observed element is intersecting with the viewport
+        if (entries[0].isIntersecting) {
 
+            // Get references to the next and previous siblings of the observed element
+            const nextSibling = sectionDOM.nextElementSibling;
+            const prevSibling = sectionDOM.previousElementSibling;
+            // Remove the 'active' class from next and previous siblings if they exist
+            if (nextSibling) {
+                nextSibling.classList.remove('active');
+                navLinkRemoveActive(nextSibling.id)
+            }
+
+            if (prevSibling && prevSibling.tagName === 'SECTION') {
+                prevSibling.classList.remove('active');
+                navLinkRemoveActive(prevSibling.id);
+            }
+
+            sectionDOM.classList.add('active');
+            navLinkAddActive(sectionDOM.id);
+        }
+    }, { threshold: 0.65 }); // Define the intersection threshold for triggering the observer
+
+    // Start observing the provided DOM element
+    observer.observe(sectionDOM);
+}
 
 // Scroll to anchor ID using scrollTO event
+function scrollToSection(sectionID) {
+    const scrollToElementDOM = document.querySelector(`section[id="${sectionID}"]`);
 
+    // Get the position and dimensions of the element relative to the viewport
+    const scrollToElementRect = scrollToElementDOM.getBoundingClientRect();
+
+    // Calculate the scroll position needed to bring the element to the top of the viewport
+    const scrollToValue = window.scrollY - (scrollToElementRect.top * -1);
+
+    window.scrollTo({
+        top: scrollToValue,
+        behavior: 'smooth'
+    });
+}
 
 /**
  * End Main Functions
@@ -54,7 +119,33 @@
 */
 
 // Build menu 
+const navMenuListDOM = document.createElement('ul');
+navMenuListDOM.id = 'navbar__list';
 
 // Scroll to section on link click
+sectionsDOM.forEach(section => {
+    const sectionID = section.id;
+    const sectionNavText = section.dataset.nav;
+
+    const menuListItemDOM = document.createElement('li');
+    const menuListItemAnchorDOM = document.createElement('a');
+    const menuListItemAnchorTextDOM = document.createTextNode(sectionNavText);
+
+    // Configure the anchor element with attributes and content
+    menuListItemAnchorDOM.href = "#"; 
+    menuListItemAnchorDOM.setAttribute('data-section-id', sectionID);
+    menuListItemAnchorDOM.classList = 'menu-link';
+    menuListItemAnchorDOM.appendChild(menuListItemAnchorTextDOM);
+
+    // Attach a click event listener to the anchor element
+    menuListItemAnchorDOM.addEventListener('click', handleMenuAnchorClick(sectionID));
+
+    menuListItemDOM.appendChild(menuListItemAnchorDOM);
+    navMenuListDOM.appendChild(menuListItemDOM);
+});
+
+buildNav();
+navDOM.appendChild(navMenuListDOM);
 
 // Set sections as active
+sectionsDOM.forEach(section=> activeOnNearTopViewport(section));
