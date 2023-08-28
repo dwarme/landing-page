@@ -18,6 +18,8 @@ The landing page is designed to be responsive and usable across modern desktop, 
     <li>Clear indication of the active section while scrolling</li>
 </ul>
 
+## Dependencies
+No external dependencies are required for this project.
 
 ## Usage
 Clone the repository to your local machine.
